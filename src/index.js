@@ -1,6 +1,8 @@
 import './style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import 'bootstrap'
+import $ from 'jquery'
 import Vue from 'vue'
 import { gql_request, gql_search } from './graphql.js'
 
@@ -54,8 +56,10 @@ var vm = new Vue({
       gql_search(cvue.search_text,
         function(data) {
           cvue.search_results = data['data']['datasetSpecifications']['edges']
-          console.log(cvue.search_results)
           cvue.search_loading = false
+          if (!$('#search-dropdown').hasClass('show')) {
+            $('.dropdown-toggle').dropdown('toggle')
+          }
         },
         function(error) {
           cvue.search_results = {}
